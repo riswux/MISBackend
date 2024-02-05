@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using System.Globalization;
 using MISBackend.Repository;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MISBackend
 {
@@ -53,6 +54,11 @@ namespace MISBackend
                     options.UseSqlServer(conString));
 
             // Konfigurasi otentikasi Bearer
+            var tokenLifetimeManager = new Middleware.JwtTokenLifetimeManager();
+
+            builder.Services
+                .AddSingleton<Middleware.ITokenLifetimeManager>(tokenLifetimeManager);
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -70,6 +76,7 @@ namespace MISBackend
                         ValidAudience = audience, // Ganti dengan audience yang sesuai
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey ?? "Th3RealW@rld!@@1989")) // Ganti dengan kunci rahasia yang sesuai
                     };
+                    options.SaveToken = true;
                 });
 
             // Add services to the container.
@@ -122,6 +129,8 @@ namespace MISBackend
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
+
+            builder.Services.AddHttpContextAccessor();
 
             var app = builder.Build();
 

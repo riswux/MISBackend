@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\WeatherForecastController.cs" />
+    <Compile Remove="Middleware\TokenManager.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,7 +11,7 @@ namespace MISBackend.Data
         }
 
         // Entities
-        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<DoctorModel> Doctors { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,22 +19,22 @@ namespace MISBackend.Data
             base.OnModelCreating(modelBuilder);
 
             //Doctor
-            modelBuilder.Entity<Doctor>()
+            modelBuilder.Entity<DoctorModel>()
                 .HasIndex(p => p.Email)
                 .IsUnique();
-            modelBuilder.Entity<Doctor>()
+            modelBuilder.Entity<DoctorModel>()
                 .Property(p => p.Email)
                 .HasColumnType("nvarchar(100)");
-            modelBuilder.Entity<Doctor>()
+            modelBuilder.Entity<DoctorModel>()
                 .Property(p => p.Name)
                 .HasColumnType("nvarchar(255)");
-            modelBuilder.Entity<Doctor>()
+            modelBuilder.Entity<DoctorModel>()
                 .Property(p => p.Password)
                 .HasColumnType("nvarchar(255)");
-            modelBuilder.Entity<Doctor>()
+            modelBuilder.Entity<DoctorModel>()
                 .Property(p => p.Gender)
                 .HasColumnType("nvarchar(50)");
-            modelBuilder.Entity<Doctor>()
+            modelBuilder.Entity<DoctorModel>()
                 .Property(p => p.Gender)
                 .HasConversion<string>()
                 .HasColumnType("nvarchar(50)");
