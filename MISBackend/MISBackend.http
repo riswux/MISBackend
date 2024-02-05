@@ -1,0 +1,9 @@
+@MISBackend_HostAddress = http://localhost:5074
+
+#GET {{MISBackend_HostAddress}}/weatherforecast/
+#Accept: application/json
+
+POST {{MISBackend_HostAddress}}/api/doctor/register/
+Accept: application/json
+
+###
