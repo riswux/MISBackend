@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MISBackend.Migrations
+namespace MISBackend.DAL.Migrations
 {
     [DbContext(typeof(MISDbContext))]
-    [Migration("20240205135904_InitialDatabase")]
-    partial class InitialDatabase
+    [Migration("20240205150051_AlterDoctor")]
+    partial class AlterDoctor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,7 +41,6 @@ namespace MISBackend.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")

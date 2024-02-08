@@ -8,7 +8,7 @@ namespace MISBackend.DAL.Entity
     {
         [Key]
         public Guid Id { get; set; }
-        [Required, StringLength(100)]
+        [Required, StringLength(255)]
         public required string Name { get; set; }
         [Required, StringLength(255)]
         public required string Password { get; set; }

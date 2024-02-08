@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MISBackend.Migrations
+namespace MISBackend.DAL.Migrations
 {
     /// <inheritdoc />
     public partial class AlterDoctor : Migration

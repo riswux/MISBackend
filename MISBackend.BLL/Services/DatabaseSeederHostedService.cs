@@ -1,7 +1,9 @@
-﻿using MISBackend.DAL;
-using MISBackend.Migrations;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using MISBackend.DAL;
+using MISBackend.DAL.Migrations;
 
-namespace MISBackend
+namespace MISBackend.BLL.Services
 {
     public class DatabaseSeederHostedService : IHostedService
     {

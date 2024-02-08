@@ -14,6 +14,7 @@ namespace MISBackend.DAL
 
         // Entities
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,6 +38,15 @@ namespace MISBackend.DAL
                 .Property(p => p.Gender)
                 .HasColumnType("nvarchar(50)");
             modelBuilder.Entity<Doctor>()
+                .Property(p => p.Gender)
+                .HasConversion<string>()
+                .HasColumnType("nvarchar(50)");
+
+            //Patient
+            modelBuilder.Entity<Patient>()
+                .Property(p => p.Name)
+                .HasColumnType("nvarchar(255)");
+            modelBuilder.Entity<Patient>()
                 .Property(p => p.Gender)
                 .HasConversion<string>()
                 .HasColumnType("nvarchar(50)");

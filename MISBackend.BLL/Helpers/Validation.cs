@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace MISBackend.Helpers
+namespace MISBackend.BLL.Helpers
 {
     public class Validation
     {

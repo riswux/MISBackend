@@ -9,7 +9,6 @@ using Microsoft.OpenApi.Models;
 using System.Globalization;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
-using MISBackend.Migrations;
 using MISBackend.Middleware;
 using Microsoft.AspNetCore.Identity;
 using MISBackend.DAL;
@@ -118,7 +117,7 @@ namespace MISBackend
             });
 
             // Daftarkan DatabaseSeeder
-            builder.Services.AddScoped<MISDbContextSeed>();
+            builder.Services.AddScoped<DAL.Migrations.MISDbContextSeed>();
 
             // Daftarkan Hosted Service
             builder.Services.AddHostedService<DatabaseSeederHostedService>();

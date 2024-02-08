@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MISBackend.Migrations
+namespace MISBackend.DAL.Migrations
 {
     [DbContext(typeof(MISDbContext))]
     [Migration("20240205163115_AlterDoctor2")]

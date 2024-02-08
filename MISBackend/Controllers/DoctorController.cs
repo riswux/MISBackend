@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using MISBackend.Helpers;
+using MISBackend.BLL.Helpers;
 using MISBackend.Middleware;
 using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Annotations;
