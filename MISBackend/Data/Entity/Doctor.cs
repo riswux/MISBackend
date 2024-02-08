@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace MISBackend.Data.Entity
 {
     [Table("Doctor")]
-    public class DoctorModel
+    public class Doctor
     {
         [Key]
         public Guid Id { get; set; }

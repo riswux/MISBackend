@@ -11,6 +11,9 @@ using System.Globalization;
 using MISBackend.Repository;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
+using MISBackend.Migrations;
+using MISBackend.Middleware;
+using Microsoft.AspNetCore.Identity;
 
 namespace MISBackend
 {
@@ -55,9 +58,9 @@ namespace MISBackend
 
             // Konfigurasi otentikasi Bearer
             var tokenLifetimeManager = new Middleware.JwtTokenLifetimeManager();
+            builder.Services.AddSingleton<Middleware.ITokenLifetimeManager>(tokenLifetimeManager);
+            builder.Services.AddScoped<JwtTokenLifetimeManager>(); // Or use another appropriate lifetime scope
 
-            builder.Services
-                .AddSingleton<Middleware.ITokenLifetimeManager>(tokenLifetimeManager);
 
             builder.Services.AddAuthentication(options =>
             {
@@ -66,6 +69,8 @@ namespace MISBackend
             })
                 .AddJwtBearer(options =>
                 {
+                    options.RequireHttpsMetadata = false; // Set true jika menggunakan HTTPS
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -76,8 +81,8 @@ namespace MISBackend
                         ValidAudience = audience, // Ganti dengan audience yang sesuai
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey ?? "Th3RealW@rld!@@1989")) // Ganti dengan kunci rahasia yang sesuai
                     };
-                    options.SaveToken = true;
                 });
+            builder.Services.AddAuthorization();
 
             // Add services to the container.
 
@@ -113,12 +118,12 @@ namespace MISBackend
             });
 
             // Daftarkan DatabaseSeeder
-            // builder.Services.AddScoped<MISBackContextSeed>();
+            builder.Services.AddScoped<MISDbContextSeed>();
 
             // Daftarkan Hosted Service
-            // builder.Services.AddHostedService<DatabaseSeederHostedService>();
+            builder.Services.AddHostedService<DatabaseSeederHostedService>();
 
-            //Menambahkan Repository
+            //Menambahkan Service / BLL
             builder.Services.AddScoped<RepMisBack>();
 
             builder.Services.ConfigureHttpJsonOptions(options =>
@@ -143,7 +148,6 @@ namespace MISBackend
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "MIS.Back v1");
                 });
             }
-
 
             app.UseHttpsRedirection();
 

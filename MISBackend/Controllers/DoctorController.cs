@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace MISBackend.Controllers
@@ -34,7 +36,7 @@ namespace MISBackend.Controllers
             _tokenLifetimeManager = tokenLifetimeManager;
         }
 
-        [HttpPost("register", Name = "register")]
+        [HttpPost, Route("register", Name = "register")]
         [SwaggerResponse(200, "OK", typeof(MISBackend.Model.Response.TokenResponseModel))]
         [SwaggerResponse(400, "Invalid arguments")]
         [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.Model.Response.ResponseModel))]
@@ -117,11 +119,11 @@ namespace MISBackend.Controllers
             }
         }
 
-        [HttpPost("logout", Name = "logout")]
+        [HttpPost, Route("logout", Name = "logout")]
         [SwaggerResponse(200, "OK", typeof(MISBackend.Model.Response.ResponseModel))]
         [SwaggerResponse(401, "Unauthorized")]
         [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.Model.Response.ResponseModel))]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Logout()
         {
             try
@@ -143,12 +145,12 @@ namespace MISBackend.Controllers
             }
         }
 
-        [HttpGet("profile", Name = "profile")]
+        [HttpGet, Route("profile", Name = "profile")]
         [SwaggerResponse(200, "OK", typeof(MISBackend.Model.Response.DoctorModel))]
         [SwaggerResponse(401, "Unauthorized")]
         [SwaggerResponse(404, "Not Found")]
         [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.Model.Response.ResponseModel))]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Profile()
         {
             try
@@ -167,7 +169,7 @@ namespace MISBackend.Controllers
                 if (jsonToken != null)
                 {
                     // Mendapatkan klaim (claim) dari token
-                    var userIdClaim = jsonToken.Claims.FirstOrDefault(claim => claim.Type == "sub");
+                    var userIdClaim = jsonToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.PrimarySid);
 
                     if (userIdClaim != null)
                     {
@@ -204,13 +206,13 @@ namespace MISBackend.Controllers
             }
         }
 
-        [HttpPut("profile", Name = "profile")]
+        [HttpPut, Route("profile", Name = "profile")]
         [SwaggerResponse(200, "OK", typeof(MISBackend.Model.Response.DoctorModel))]
         [SwaggerResponse(400, "Bad Request")]
         [SwaggerResponse(401, "Unauthorized")]
         [SwaggerResponse(404, "Not Found")]
         [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.Model.Response.ResponseModel))]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Profile([FromBody] MISBackend.Model.Payload.DoctorEditModel doctor)
         {
             try
@@ -229,7 +231,7 @@ namespace MISBackend.Controllers
                 if (jsonToken != null)
                 {
                     // Mendapatkan klaim (claim) dari token
-                    var userIdClaim = jsonToken.Claims.FirstOrDefault(claim => claim.Type == "sub");
+                    var userIdClaim = jsonToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.PrimarySid);
 
                     if (userIdClaim != null)
                     {

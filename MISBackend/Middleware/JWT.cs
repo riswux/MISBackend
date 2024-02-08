@@ -10,7 +10,7 @@ namespace MISBackend.Middleware
         public static string GenerateToken(IConfiguration _configuration, Guid Id)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"] ?? ""));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
             var token = new JwtSecurityToken(
                 issuer: _configuration["JwtSettings:Issuer"] ?? "",
                 audience: _configuration["JwtSettings:Audience"] ?? "",
@@ -18,8 +18,8 @@ namespace MISBackend.Middleware
                 signingCredentials: credentials,
                 claims: new[]
                 {
-                    new Claim("sub", Id.ToString()) // Contoh ID pengguna
-                    // Anda dapat menambahkan claim tambahan jika diperlukan
+                    new Claim(ClaimTypes.PrimarySid, Id.ToString()), // Contoh ID pengguna
+                    new Claim(ClaimTypes.Role, "Admin")
                 }
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
