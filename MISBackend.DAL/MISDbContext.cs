@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MISBackend.Data.Entity;
+using MISBackend.DAL.Entity;
 
-namespace MISBackend.Data
+namespace MISBackend.DAL
 {
     public class MISDbContext : IdentityDbContext<IdentityUser>
     {

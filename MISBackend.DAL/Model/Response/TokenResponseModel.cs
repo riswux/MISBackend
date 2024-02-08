@@ -1,4 +1,4 @@
-﻿namespace MISBackend.Model.Response
+﻿namespace MISBackend.DAL.Model.Response
 {
     public class TokenResponseModel
     {

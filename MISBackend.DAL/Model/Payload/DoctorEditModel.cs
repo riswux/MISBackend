@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace MISBackend.Model.Payload
+namespace MISBackend.DAL.Model.Payload
 {
     public class DoctorEditModel
     {

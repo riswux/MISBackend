@@ -39,4 +39,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MISBackend.BLL\MISBackend.BLL.csproj" />
+    <ProjectReference Include="..\MISBackend.DAL\MISBackend.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

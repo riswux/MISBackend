@@ -1,4 +1,4 @@
-﻿namespace MISBackend.Model.Payload
+﻿namespace MISBackend.DAL.Model.Payload
 {
     public class LoginCredentialModel
     {

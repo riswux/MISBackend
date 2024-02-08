@@ -1,14 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-namespace MISBackend.Data.Entity
+namespace MISBackend.DAL.Model.Payload
 {
-    [Table("Doctor")]
-    public class Doctor
+    public class DoctorRegisterModel
     {
-        [Key]
-        public Guid Id { get; set; }
-        [Required, StringLength(100)]
         public required string Name { get; set; }
         [Required, StringLength(255)]
         public required string Password { get; set; }
@@ -17,11 +15,11 @@ namespace MISBackend.Data.Entity
         [Required]
         public DateTime Birthday { get; set; }
         [Required]
+        [JsonConverter(typeof(JsonStringEnumConverter))] // Anotasi untuk menggunakan JsonStringEnumConverter
         public Enum.DataEnum.Gender Gender { get; set; }
         [Required, StringLength(100)]
         public required string Phone { get; set; }
         [Required]
         public Guid Speciality { get; set; }
-        public DateTime CreateTime { get; set; }
     }
 }

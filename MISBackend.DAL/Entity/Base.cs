@@ -1,4 +1,4 @@
-﻿namespace MISBackend.Data.Entity
+﻿namespace MISBackend.DAL.Entity
 {
     public class Base
     {

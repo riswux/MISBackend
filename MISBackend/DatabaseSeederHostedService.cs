@@ -1,4 +1,5 @@
-﻿using MISBackend.Migrations;
+﻿using MISBackend.DAL;
+using MISBackend.Migrations;
 
 namespace MISBackend
 {

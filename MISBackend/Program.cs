@@ -4,16 +4,16 @@ using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MISBackend.Data;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
-using MISBackend.Repository;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using MISBackend.Migrations;
 using MISBackend.Middleware;
 using Microsoft.AspNetCore.Identity;
+using MISBackend.DAL;
+using MISBackend.BLL.Services;
 
 namespace MISBackend
 {

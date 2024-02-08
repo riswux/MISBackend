@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MISBackend.Data;
+using MISBackend.DAL;
+using MISBackend.DAL.Entity;
+using MISBackend.DAL.Enum;
 
 namespace MISBackend.Migrations
 {
@@ -26,7 +28,7 @@ namespace MISBackend.Migrations
         public async Task SeedSuperAdminAsync()
         {
             //Seed Default User
-            var defaultUser = new Data.Entity.Doctor()
+            var defaultUser = new Doctor()
             {
                 Id = IdDoctor,
                 Email = "superadmin@gmail.com",
@@ -35,7 +37,7 @@ namespace MISBackend.Migrations
                 Phone = "0878978989",
                 Birthday = DateTime.Parse("1989-01-01"),
                 CreateTime = DateTime.Now,
-                Gender = Enum.DataEnum.Gender.Male,
+                Gender = MISBackend.DAL.Enum.DataEnum.Gender.Male,
                 Speciality = IdSpeciality
             };
             if (await _context.Doctors.FirstOrDefaultAsync(o => o.Id == defaultUser.Id) == null)

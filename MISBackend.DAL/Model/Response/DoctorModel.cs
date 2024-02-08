@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace MISBackend.Model.Response
+namespace MISBackend.DAL.Model.Response
 {
     public class DoctorModel
     {

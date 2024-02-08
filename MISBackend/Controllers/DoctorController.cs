@@ -20,12 +20,12 @@ namespace MISBackend.Controllers
     [Route("api/doctor")]
     public class DoctorController : ControllerBase
     {
-        private readonly Repository.RepMisBack _repMisBack;
+        private readonly BLL.Services.RepMisBack _repMisBack;
         private readonly ILogger<DoctorController> _logger;
         private readonly IConfiguration _configuration;
         private readonly JwtTokenLifetimeManager _tokenLifetimeManager;
 
-        public DoctorController(Repository.RepMisBack repMisBack,
+        public DoctorController(BLL.Services.RepMisBack repMisBack,
                                 ILogger<DoctorController> logger,
                                 IConfiguration configuration,
                                 JwtTokenLifetimeManager tokenLifetimeManager)
@@ -37,10 +37,10 @@ namespace MISBackend.Controllers
         }
 
         [HttpPost, Route("register", Name = "register")]
-        [SwaggerResponse(200, "OK", typeof(MISBackend.Model.Response.TokenResponseModel))]
+        [SwaggerResponse(200, "OK", typeof(MISBackend.DAL.Model.Response.TokenResponseModel))]
         [SwaggerResponse(400, "Invalid arguments")]
-        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.Model.Response.ResponseModel))]
-        public IActionResult Register([FromBody] Model.Payload.DoctorRegisterModel doctor)
+        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.DAL.Model.Response.ResponseModel))]
+        public IActionResult Register([FromBody] MISBackend.DAL.Model.Payload.DoctorRegisterModel doctor)
         {
             if (doctor == null)
             {
@@ -69,11 +69,11 @@ namespace MISBackend.Controllers
             if (saveData.Item1 == 200)
             {
                 var token = Middleware.JWT.GenerateToken(_configuration, (saveData.Item3 == null ? Guid.NewGuid() : saveData.Item3.Id));
-                return Ok(new MISBackend.Model.Response.TokenResponseModel { Token = token });
+                return Ok(new MISBackend.DAL.Model.Response.TokenResponseModel { Token = token });
             }
             else if (saveData.Item1 == 500)
             {
-                return StatusCode(500, new MISBackend.Model.Response.ResponseModel { Status = saveData.Item1.ToString(), Message = saveData.Item2 });
+                return StatusCode(500, new MISBackend.DAL.Model.Response.ResponseModel { Status = saveData.Item1.ToString(), Message = saveData.Item2 });
             }
             else
             {
@@ -82,10 +82,10 @@ namespace MISBackend.Controllers
         }
 
         [HttpPost("login", Name = "login")]
-        [SwaggerResponse(200, "OK", typeof(MISBackend.Model.Response.TokenResponseModel))]
+        [SwaggerResponse(200, "OK", typeof(MISBackend.DAL.Model.Response.TokenResponseModel))]
         [SwaggerResponse(400, "Invalid arguments")]
-        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.Model.Response.ResponseModel))]
-        public IActionResult Login([FromBody] Model.Payload.LoginCredentialModel doctor)
+        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.DAL.Model.Response.ResponseModel))]
+        public IActionResult Login([FromBody] MISBackend.DAL.Model.Payload.LoginCredentialModel doctor)
         {
             if (doctor == null)
             {
@@ -107,11 +107,11 @@ namespace MISBackend.Controllers
             if (saveData.Item1 == 200)
             {
                 var token = Middleware.JWT.GenerateToken(_configuration, (saveData.Item3 == null ? Guid.NewGuid() : saveData.Item3.Id));
-                return Ok(new MISBackend.Model.Response.TokenResponseModel { Token = token });
+                return Ok(new MISBackend.DAL.Model.Response.TokenResponseModel { Token = token });
             }
             else if (saveData.Item1 == 500)
             {
-                return StatusCode(500, new MISBackend.Model.Response.ResponseModel { Status = saveData.Item1.ToString(), Message = saveData.Item2 });
+                return StatusCode(500, new MISBackend.DAL.Model.Response.ResponseModel { Status = saveData.Item1.ToString(), Message = saveData.Item2 });
             }
             else
             {
@@ -120,9 +120,9 @@ namespace MISBackend.Controllers
         }
 
         [HttpPost, Route("logout", Name = "logout")]
-        [SwaggerResponse(200, "OK", typeof(MISBackend.Model.Response.ResponseModel))]
+        [SwaggerResponse(200, "OK", typeof(MISBackend.DAL.Model.Response.ResponseModel))]
         [SwaggerResponse(401, "Unauthorized")]
-        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.Model.Response.ResponseModel))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.DAL.Model.Response.ResponseModel))]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Logout()
         {
@@ -141,15 +141,15 @@ namespace MISBackend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new MISBackend.Model.Response.ResponseModel { Status = ex.Message, Message = ex.Message });
+                return StatusCode(500, new MISBackend.DAL.Model.Response.ResponseModel { Status = ex.Message, Message = ex.Message });
             }
         }
 
         [HttpGet, Route("profile", Name = "profile")]
-        [SwaggerResponse(200, "OK", typeof(MISBackend.Model.Response.DoctorModel))]
+        [SwaggerResponse(200, "OK", typeof(MISBackend.DAL.Model.Response.DoctorModel))]
         [SwaggerResponse(401, "Unauthorized")]
         [SwaggerResponse(404, "Not Found")]
-        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.Model.Response.ResponseModel))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.DAL.Model.Response.ResponseModel))]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Profile()
         {
@@ -187,7 +187,7 @@ namespace MISBackend.Controllers
                         }
                         else
                         {
-                            return StatusCode(500, new MISBackend.Model.Response.ResponseModel { Status = data.Item2, Message = data.Item2 });
+                            return StatusCode(500, new MISBackend.DAL.Model.Response.ResponseModel { Status = data.Item2, Message = data.Item2 });
                         }
                     }
                     else
@@ -202,18 +202,18 @@ namespace MISBackend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new MISBackend.Model.Response.ResponseModel { Status = ex.Message, Message = ex.Message });
+                return StatusCode(500, new MISBackend.DAL.Model.Response.ResponseModel { Status = ex.Message, Message = ex.Message });
             }
         }
 
         [HttpPut, Route("profile", Name = "profile")]
-        [SwaggerResponse(200, "OK", typeof(MISBackend.Model.Response.DoctorModel))]
+        [SwaggerResponse(200, "OK", typeof(MISBackend.DAL.Model.Response.DoctorModel))]
         [SwaggerResponse(400, "Bad Request")]
         [SwaggerResponse(401, "Unauthorized")]
         [SwaggerResponse(404, "Not Found")]
-        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.Model.Response.ResponseModel))]
+        [SwaggerResponse(500, "Internal Server Error", typeof(MISBackend.DAL.Model.Response.ResponseModel))]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IActionResult Profile([FromBody] MISBackend.Model.Payload.DoctorEditModel doctor)
+        public IActionResult Profile([FromBody] MISBackend.DAL.Model.Payload.DoctorEditModel doctor)
         {
             try
             {
@@ -272,7 +272,7 @@ namespace MISBackend.Controllers
                         }
                         else
                         {
-                            return StatusCode(500, new MISBackend.Model.Response.ResponseModel { Status = data.Item2, Message = data.Item2 });
+                            return StatusCode(500, new MISBackend.DAL.Model.Response.ResponseModel { Status = data.Item2, Message = data.Item2 });
                         }
                     }
                     else
@@ -287,7 +287,7 @@ namespace MISBackend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new MISBackend.Model.Response.ResponseModel { Status = ex.Message, Message = ex.Message });
+                return StatusCode(500, new MISBackend.DAL.Model.Response.ResponseModel { Status = ex.Message, Message = ex.Message });
             }
         }
     }

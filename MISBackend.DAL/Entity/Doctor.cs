@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json.Converters;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-namespace MISBackend.Model.Payload
+namespace MISBackend.DAL.Entity
 {
-    public class DoctorRegisterModel
+    [Table("Doctor")]
+    public class Doctor
     {
+        [Key]
+        public Guid Id { get; set; }
+        [Required, StringLength(100)]
         public required string Name { get; set; }
         [Required, StringLength(255)]
         public required string Password { get; set; }
@@ -16,11 +17,11 @@ namespace MISBackend.Model.Payload
         [Required]
         public DateTime Birthday { get; set; }
         [Required]
-        [JsonConverter(typeof(JsonStringEnumConverter))] // Anotasi untuk menggunakan JsonStringEnumConverter
         public Enum.DataEnum.Gender Gender { get; set; }
         [Required, StringLength(100)]
         public required string Phone { get; set; }
         [Required]
         public Guid Speciality { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 }
