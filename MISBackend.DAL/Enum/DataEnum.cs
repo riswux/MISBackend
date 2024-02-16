@@ -10,5 +10,17 @@ namespace MISBackend.DAL.Enum
             Male,
             Female
         }
+
+        public enum Conclusion
+        {
+            Disease, 
+            Recovery, 
+            Death
+        }
+
+        public enum PatientSorting
+        {
+            NameAsc, NameDesc, CreateAsc, CreateDesc, InspectionAsc, InspectionDesc
+        }
     }
 }
